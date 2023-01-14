@@ -93,7 +93,7 @@ func registerGCloudCommands(router *disgolf.Router) {
 					userId = ctx.Interaction.Member.User.ID
 					userName = ctx.Interaction.Member.User.Username
 				} else {
-					if ctx.Interaction.User == nil {
+					if ctx.Interaction.User != nil {
 						userId = ctx.Interaction.User.ID
 						userName = ctx.Interaction.User.Username
 					} else {

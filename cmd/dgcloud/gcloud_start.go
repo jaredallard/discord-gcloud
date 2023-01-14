@@ -73,12 +73,6 @@ func gcloudStartFunc(gcli *gcloud.Client) func(ctx *disgolf.Ctx) {
 			return
 		}
 
-		if err := ctx.InteractionRespond(ctx.Interaction, &discordgo.InteractionResponse{
-			Type: discordgo.InteractionResponseDeferredChannelMessageWithSource,
-		}); err != nil {
-			errorReplyInteraction(ctx, errors.Wrap(err, "failed to inform discord we'll reply later, instance has been started but we can't inform you when it's done starting"))
-		}
-
 		if _, err := gcli.StartInstance(context.TODO(), instance, zone); err != nil {
 			errorReplyInteraction(ctx, err)
 			return

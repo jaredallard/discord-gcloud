@@ -9,6 +9,11 @@ This is configured using environment variables, which can be seen in `.env` in t
 * `DISCORD_TOKEN` - The token for your Discord bot.
 * `DISCORD_APP_ID` - The ID of your Discord bot.
 * `DISCORD_GUILD_ID` - The ID of the Discord guild you want to use this bot in.
+* `GCLOUD_PROJECT` - The ID of the GCP project you want to run commands in.
+* `GCLOUD_SERVICE_ACCOUNT_EMAIL` - The service account email for the service account you want to use to run commands.
+* `GOOGLE_SERVICE_ACCOUNT_KEY_FILE` - base64 encoded JSON key file for the service account you want to use to run commands.
+* `SUPERUSERS_ROLE_ID` - The ID of the Discord role which should be mapped to the `superuser` permission.
+* `INSTANCES_ROLE_ID` - The ID of the Discord role which should be mapped to the `instances` permission.
 
 ## Usage
 

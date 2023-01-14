@@ -5,7 +5,6 @@ go 1.19
 require (
 	github.com/FedorLap2006/disgolf v0.0.0-20221004200601-99cfc3d9a0e1
 	github.com/bwmarrin/discordgo v0.26.1
-	github.com/davecgh/go-spew v1.1.1
 	github.com/getoutreach/gobox v1.57.3
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.28.0
