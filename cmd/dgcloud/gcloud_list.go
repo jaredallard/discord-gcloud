@@ -20,7 +20,6 @@ import (
 
 	"github.com/FedorLap2006/disgolf"
 	"github.com/bwmarrin/discordgo"
-	"github.com/pkg/errors"
 	"github.com/rgst-io/discord-gcloud/internal/gcloud"
 )
 
@@ -36,24 +35,15 @@ func gcloudListCommand(gcli *gcloud.Client) *disgolf.Command {
 // gcloudListFunc is the handler for when the list command is ran.
 func gcloudListFunc(gcli *gcloud.Client) func(ctx *disgolf.Ctx) {
 	return func(ctx *disgolf.Ctx) {
-		if err := ctx.Respond(&discordgo.InteractionResponse{
-			Type: discordgo.InteractionResponseDeferredChannelMessageWithSource,
-		}); err != nil {
-			errorReplyInteraction(ctx, errors.Wrap(err, "failed to inform discord we'll reply later"))
-			return
-		}
-
 		out, err := gcli.ListInstances(context.TODO())
 		if err != nil {
 			errorReplyInteraction(ctx, err)
 			return
 		}
 
-		ctx.Respond(&discordgo.InteractionResponse{
-			Type: discordgo.InteractionResponseChannelMessageWithSource,
-			Data: &discordgo.InteractionResponseData{
-				Content: "```" + out + "```",
-			},
+		resp := "```" + out + "```"
+		ctx.InteractionResponseEdit(ctx.Interaction, &discordgo.WebhookEdit{
+			Content: &resp,
 		})
 	}
 }
