@@ -42,6 +42,7 @@ func gcloudListFunc(gcli *gcloud.Client) func(ctx *disgolf.Ctx) {
 		}
 
 		resp := "```" + out + "```"
+		//nolint:errcheck // Why: Best effort
 		ctx.InteractionResponseEdit(ctx.Interaction, &discordgo.WebhookEdit{
 			Content: &resp,
 		})
