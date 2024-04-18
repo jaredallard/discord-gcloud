@@ -39,4 +39,4 @@ Permissions for this bot are governed using Discord roles which are mapped to in
 
 ## License
 
-GPL-3.0
+AGPL-3.0

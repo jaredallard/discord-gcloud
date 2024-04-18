@@ -1,0 +1,8 @@
+name: discord-gcloud
+arguments:
+  org: jaredallard
+  license: AGPL-3.0
+  commands:
+    - dgcloud
+modules:
+  - name: github.com/rgst-io/stencil-golang

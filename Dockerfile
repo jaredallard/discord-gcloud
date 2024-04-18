@@ -1,26 +1,10 @@
-# syntax=docker/dockerfile:1.0-experimental
-FROM golang:1.19.5 AS builder
-ARG VERSION
-ENV GOCACHE "/go-build-cache"
-ENV CGO_ENABLED 0
-WORKDIR /src
+# CI system runs using amd64, so this allows us to not need QEMU, but
+# will break builds on non-amd64 Linux systems (sorry).
+FROM --platform=amd64 alpine:3.19 as cacerts
+RUN apk add --no-cache ca-certificates
 
-# Copy our source code into the container for building
-COPY . .
+FROM alpine:3.19
+ENTRYPOINT ["/usr/local/bin/dgcloud"]
 
-# Cache dependencies across builds
-RUN --mount=type=ssh --mount=type=cache,target=/go/pkg go mod download
-
-# Build our application, caching the go build cache, but also using
-# the dependency cache from earlier.
-RUN --mount=type=ssh --mount=type=cache,target=/go/pkg --mount=type=cache,target=/go-build-cache \
-  mkdir -p bin; \
-  go build -o /src/bin/ -ldflags "-s -w"  -v ./cmd/...
-
-FROM google/cloud-sdk:alpine
-ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
-
-RUN apk add --no-cache bash 
-
-COPY ./rootfs/ /
-COPY --from=builder /src/bin/dgcloud /usr/local/bin/dgcloud
+COPY --from=cacerts /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY discord-gcloud /usr/local/bin/dgcloud
