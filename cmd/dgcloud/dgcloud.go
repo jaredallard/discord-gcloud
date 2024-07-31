@@ -23,7 +23,6 @@ import (
 	"syscall"
 
 	"github.com/FedorLap2006/disgolf"
-	"github.com/getoutreach/gobox/pkg/cfg"
 	"github.com/rgst-io/discord-gcloud/internal/permissions"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -31,7 +30,7 @@ import (
 
 // main is the entry point for the dgcloud command.
 func main() {
-	token := cfg.SecretData(os.Getenv("DISCORD_TOKEN"))
+	token := os.Getenv("DISCORD_TOKEN")
 	guildID := os.Getenv("DISCORD_GUILD_ID")
 	appID := os.Getenv("DISCORD_APP_ID")
 	logFormat := os.Getenv("LOG_FORMAT")
@@ -49,7 +48,7 @@ func main() {
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 	}
 
-	bot, err := disgolf.New(string(token))
+	bot, err := disgolf.New(token)
 	if err != nil {
 		panic(err)
 	}
